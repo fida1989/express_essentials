@@ -21,6 +21,17 @@ app.get("/redirect", (request, response) => {
     response.redirect("https://www.google.com");
 });
 
+app.route("/class").get((request, response) => {
+    response.send("route chain get");
+}).post((request, response) => {
+    response.send("route chain post");
+}).put((request, response) => {
+    response.send("route chain put");
+}).delete((request, response) => {
+    response.send("route chain delete");
+});
+
+
 app.get("/next", (request, response, next) => {
     console.log("response will be sent later!");
     next();
