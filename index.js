@@ -9,8 +9,15 @@ app.use(express.static("public"));
 
 app.use("/images", express.static("images"));
 
+app.use(express.json());
+
 app.get("/", (request, response) => {
     response.json(data);
+});
+
+app.post("/item", (request, response) => {
+    console.log(request.body);
+    response.send(request.body);
 });
 
 app.get("/download", (request, response) => {
@@ -19,6 +26,10 @@ app.get("/download", (request, response) => {
 
 app.get("/redirect", (request, response) => {
     response.redirect("https://www.google.com");
+});
+
+app.get("/error", (request, response) => {
+    throw new Error();
 });
 
 app.route("/class").get((request, response) => {
@@ -55,6 +66,11 @@ app.put("/edit", (request, response) => {
 
 app.delete("/delete", (request, response) => {
     response.send("This is a DELETE request.");
+});
+
+app.use((err, req, res, mext)=> {
+    console.error(err.stack);
+    res.status(500).send("Somethin went wrong!");
 });
 
 app.listen(PORT, ()=> {
